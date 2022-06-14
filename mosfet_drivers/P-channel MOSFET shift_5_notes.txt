@@ -1,0 +1,12 @@
+I hope you realise that the zener doesn't have to continuously conduct. It's just there to clamp the voltage to a safe level.
+
+Take the attached circuit for example. Q1, R1 & R2 form a common emitter amplifier. Ignoring the loading effects and C1 (assume a steady state), the voltage across R2 is approximately equal to: (V2 - Vbe)*R2/R1
+
+Vbe is the transistor's base emitter voltage, typically 0.6V, so with 5V from V2:
+V(R2) = (5-0.6)*10/4.7 = 9.4V.
+
+Regardless of V1, when V2 = 5V, the gate voltage to the MOSFET will be 9.4V. The current through R1 (therefore R2 as well) is about (5-Vbe)/4700 = 450µA, which is much less than your requirements. Of course 9.4V is too low for D2 to conduct so it does nothing at this point.
+
+Unfortunately with only 450µA driving Q1 & Q2, the current into the MOSFET will still be too low (45mA at most) to charge/discharge the gate quickly. This is why we have C1. When V2 suddenly changes from 0V to 5V, C1 will be at 0V and as it charges there will be a current surge, causing close to the full supply voltage to be applied across R2, which will be clamped to 15V by D2. The current will fall as C1 is charged towards 4.4V and D1 will stop conducting. Now if V2 is held at 5V, the current through R1 & R2 will remain at 450µA.
+
+Note for this to work, D2 needs to have a low capacitance, so should be a small zener diode. If it slows the circuit down too much then you can put it across the MOSFETs gate and source but it will pass much more current and dissipate more power. You may be able to get away with omitting the zenner if C1 is reduced or the MOSFET has a high capacitance because charging up the gate will reduce the voltage surge.
