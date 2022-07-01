@@ -5,3 +5,4 @@ __pycache__/
 *.plt
 *.log
 *.net
+*.ignore
